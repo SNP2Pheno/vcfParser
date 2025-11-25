@@ -56,6 +56,14 @@ cmake-build-*/
 *.pdb
 *.opendb
 *.VC.db
+x64/
+**/x64/
+Debug/
+Release/
+**/Debug/
+**/Release/
+
+
 
 # macOS
 *.DS_Store
