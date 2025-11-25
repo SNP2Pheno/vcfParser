@@ -18,6 +18,7 @@ namespace vcf {
 		vector<VCFRecord> parseAll();
 		VCFHeader parseHeader();
 
+		~VCFParser();
 	private:
 		string filePath_;
 		std::istream* inputStream_ = nullptr;
