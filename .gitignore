@@ -63,7 +63,8 @@ Release/
 **/Debug/
 **/Release/
 
-
+# Testfiles
+.vcf
 
 # macOS
 *.DS_Store
