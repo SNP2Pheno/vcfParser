@@ -39,3 +39,25 @@
 
 # debug information files
 *.dwo
+
+# CLion
+.idea/
+cmake-build-*/
+
+# Visual Studio
+.vscode/
+.vs/
+*.vcxproj*
+*.sln
+*.suo
+*.user
+*.filters
+*.idb
+*.pdb
+*.opendb
+*.VC.db
+
+# macOS
+*.DS_Store
+*.AppleDouble
+._*
