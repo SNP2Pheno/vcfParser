@@ -33,11 +33,13 @@ namespace vcf {
 		string Description;
 		string Source;
 		string Version;
+		std::map<string, string> AdditionalAttributes;
 	};
 
 	struct FilterField {
 		string ID;
 		string Description;
+		std::map<string, string> AdditionalAttributes;
 	};
 
 	/*
@@ -52,23 +54,26 @@ namespace vcf {
 		string Number;
 		string Type;
 		string Description;
+		std::map<string, string> AdditionalAttributes;
 	};
 
 	struct AltField {
 		string ID;
 		string Description;
+		std::map<string, string> AdditionalAttributes;
 	};
 
 	struct ContigField {
 		string ID;
 		int Length;
-		string Url;
+		std::map<string, string> AdditionalAttributes;
 	};
 
 	struct MetaField {
 		string ID;
 		string Type;
 		std::vector<string> Values;
+		std::map<string, string> AdditionalAttributes;
 	};
 
 	struct SampleField {
@@ -78,11 +83,12 @@ namespace vcf {
 		string Disease;
 		string Description;
 		string DIO;
+		std::map<string, string> AdditionalAttributes;
 	};
 
 	struct PedigreeField {
 		string ID;
-		vector<std::map<string, string>> Members;
+		std::map<string, string> AdditionalAttributes;
 	};
 
 
@@ -90,6 +96,7 @@ namespace vcf {
 
 	struct VCFHeader {
 		string fileFormat;
+		string fileDate;
 		vector<InfoField> infoFields;
 		vector<FilterField> filterFields;
 		vector<FormatField> formatFields;
@@ -102,7 +109,7 @@ namespace vcf {
 		string pedigreeDB;
 		string source;
 		string reference;
-		vector<string> otherLines;
+		string phasing;
 		vector<string> headerLines;
 	};
 }
