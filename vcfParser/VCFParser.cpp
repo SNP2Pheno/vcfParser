@@ -1,4 +1,4 @@
-#include "VCFParser.h"
+﻿#include "VCFParser.h"
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -138,17 +138,29 @@ namespace vcf {
 			header.contigFields.push_back(contig);
 		}},
 		{"meta", [](const std::string& value, VCFHeader& header) {
-			// TODO Values [.., ..]
 			string mValue = value;
 			MetaField meta;
 			while (mValue.find('=') != string::npos) {
-				string token = mValue.substr(0, mValue.find(','));
-				string key = clearOfDoubleQuotation(token.substr(0, token.find('=')));
-				string val = clearOfDoubleQuotation(token.substr(token.find('=') + 1));
+				string token = "";
+				string key = clearOfDoubleQuotation(mValue.substr(0, mValue.find('=')));
+				string val = "";
+				if (toLower(key) == "values") {
+					token = mValue.substr(0, mValue.find(']') + 1);
+					val = clearOfDoubleQuotation(token.substr(token.find('['), token.find(']')));
+					val = val.substr(1, val.size() - 2);
+					while (val.find(",") != string::npos) {
+						meta.Values.push_back(val.substr(0, val.find(",")));
+						val = val.substr(val.find(",") + 1);
+					}
+					meta.Values.push_back(val);
+				}
+				else{
+					token = mValue.substr(0, mValue.find(','));
+					val = clearOfDoubleQuotation(token.substr(token.find('=') + 1));
+				}
 				key = toLower(key);
 				if (key == "id") meta.ID = val;
 				else if (key == "type") meta.Type = val;
-				//else if (key == "values") meta.Values = val;		// TODO
 				else meta.AdditionalAttributes[key] = val;
 				if (mValue.find(',') != -1) {
 					mValue = mValue.substr(mValue.find(',') + 1);
