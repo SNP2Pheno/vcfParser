@@ -110,6 +110,7 @@ namespace vcf {
 		string source;
 		string reference;
 		string phasing;
+		vector<string> recordHeader;
 		vector<string> headerLines;
 	};
 }

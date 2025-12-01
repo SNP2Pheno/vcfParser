@@ -40,7 +40,7 @@ namespace vcf {
 
 
 		while (inputStream_ && std::getline(*inputStream_, line)) {
-			if (line.substr(0, 2) != "##") {
+			if (line.substr(0, 2) != "#") {
 				// Reached end of header
 				break;
 			}
