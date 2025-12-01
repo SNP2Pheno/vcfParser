@@ -2,6 +2,7 @@
 #include <functional>
 #include <unordered_map>
 #include "utils.h"
+#include "utils.cpp"
 
 namespace vcf {
 
@@ -225,14 +226,7 @@ namespace vcf {
 			header.phasing = value;
 		}},
 		{ "recordheader", [](const std::string& value, VCFHeader& header) {
-			string rValue = value;
-			std::vector<string> columns;
-			while (rValue.find('\t') != string::npos) {
-				columns.push_back(rValue.substr(0, rValue.find('\t')));
-				rValue = rValue.substr(rValue.find('\t') + 1);
-			}
-			columns.push_back(rValue);
-			header.recordHeader = columns;
+			header.recordHeader = splitString(value, '\t');
 		} }
 	};
 
