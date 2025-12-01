@@ -4,6 +4,7 @@
 #include <iostream>
 #include "utils.h"
 #include "HeaderParsing.h"
+#include "RecordsParser.h"
 
 
 using std::string;
@@ -49,6 +50,23 @@ namespace vcf {
 		return header;
 
 	}
+
+	vector<VCFRecord> VCFParser::parseAll() {
+		vector<VCFRecord> records;
+		string line;
+
+		while (inputStream_ && std::getline(*inputStream_, line)) {
+			if (line.empty() || line[0] == '#') {
+				continue; // Skip header lines and empty lines
+			}
+			VCFRecord record;
+			parseRecord(line, record);
+			records.push_back(record);
+		}
+
+		return records;
+	}
+
 
 	VCFParser::~VCFParser() {
 		delete inputStream_;

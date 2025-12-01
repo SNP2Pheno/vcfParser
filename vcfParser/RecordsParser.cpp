@@ -2,5 +2,7 @@
 
 namespace vcf
 {
-	void parseRecord(const std::string& plainLine, VCFRecord&) {}
+	void parseRecord(const std::string& plainLine, VCFRecord&) {
+	
+	}
 }
