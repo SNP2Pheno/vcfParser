@@ -33,19 +33,25 @@ namespace vcf {
 		CHR22,
 		CHRX,
 		CHRY,
-		CHRM
+		CHRM,
+		NONSTANDARD
+	};
+
+	struct SampleCall {
+		std::unordered_map<string, std::vector<string>> fields;
 	};
 
 	struct VCFRecord {
-		EChrom chrom;
-		int position;
-		string id;
-		string ref;
-		std::vector<string> alts;
-		string qual;
-		string filter;
-		std::vector<string> info;
-		std::vector<string> format;
-		std::vector<std::vector<string>> samples;
+		EChrom chrom;											// MANDATORY
+		int position;											// MANDATORY
+		string id;												// MANDATORY
+		string ref;												// MANDATORY
+		std::vector<string> alts;								// MANDATORY
+		string qual;											// MANDATORY
+		string filter;											// MANDATORY
+		std::unordered_map<string, std::vector<string>> info;	// MANDATORY
+		std::unordered_set<string> infoFlags;					// MANDATORY
+		std::vector<string> formatKeys;							// ONLY IF GENOTYPE DATA IS PRESENT
+		std::vector<SampleCall> samples;						// ONLY IF GENOTYPE DATA IS PRESENT => No duplicate sample IDs
 	};
 }
