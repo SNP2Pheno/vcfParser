@@ -64,7 +64,8 @@ Release/
 **/Release/
 
 # Testfiles
-.vcf
+*.vcf
+main.cpp
 
 # macOS
 *.DS_Store
