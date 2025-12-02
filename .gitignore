@@ -71,3 +71,4 @@ main.cpp
 *.DS_Store
 *.AppleDouble
 ._*
+/vcfParser/vcfTestFileSimple.vcf
