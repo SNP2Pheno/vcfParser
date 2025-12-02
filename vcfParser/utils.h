@@ -12,4 +12,6 @@ namespace vcf {
 	std::vector<std::string> splitString(const std::string& str, char delimiter);
 
 	EChrom mapChromosome(std::string chrom);
+
+	std::string cleanLine(std::string l);
 }

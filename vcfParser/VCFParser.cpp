@@ -2,6 +2,7 @@
 #include <fstream>
 #include "HeaderParsing.h"
 #include "RecordsParsing.h"
+#include "utils.h"
 
 
 using std::string;
@@ -37,6 +38,7 @@ namespace vcf {
 
 
 		while (inputStream_ && std::getline(*inputStream_, line)) {
+			line = cleanLine(line);
 			if (line.substr(0, 1) != "#") {
 				// Reached end of header
 				leftoverLine_ = line;
@@ -67,7 +69,7 @@ namespace vcf {
 		}
 
 		while (inputStream_ && std::getline(*inputStream_, line)) {
-
+			line = cleanLine(line);
 			if (line.empty() || line[0] == '#')
 				continue;
 

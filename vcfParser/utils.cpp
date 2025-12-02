@@ -62,4 +62,26 @@ namespace vcf
         // hs37d5 and 1000 Genomes have many nonstandard contigs
         return EChrom::NONSTANDARD;
     }
+
+    std::string cleanLine(std::string l) {
+
+        // UTF-8 BOM (EF BB BF)
+        if (l.size() >= 3 &&
+            (unsigned char)l[0] == 0xEF &&
+            (unsigned char)l[1] == 0xBB &&
+            (unsigned char)l[2] == 0xBF) {
+
+            l = l.substr(3);
+        }
+
+        // trim left
+        while (!l.empty() && (l.front() == ' ' || l.front() == '\t'))
+            l.erase(l.begin());
+
+        // trim right
+        while (!l.empty() && (l.back() == ' ' || l.back() == '\t'))
+            l.pop_back();
+
+        return l;
+    }
 }
