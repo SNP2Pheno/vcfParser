@@ -231,7 +231,7 @@ namespace vcf {
 
 
 	void parseHeaderLine(const std::string& plainLine, VCFHeader& header) {
-		if (plainLine.substr(0, 2) == "#C") {
+		if (plainLine.starts_with("#CHROM")) {
 			string key = "recordHeader";
 			string line = plainLine.substr(1); // Remove leading '#'
 			header.headerLines.push_back(line);

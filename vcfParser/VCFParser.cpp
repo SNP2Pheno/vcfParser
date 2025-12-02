@@ -39,7 +39,7 @@ namespace vcf {
 
 		while (inputStream_ && std::getline(*inputStream_, line)) {
 			line = cleanLine(line);
-			if (line.substr(0, 1) != "#") {
+			if (!line.starts_with("##") && !line.starts_with("#CHROM")) {
 				// Reached end of header
 				leftoverLine_ = line;
 				break;
