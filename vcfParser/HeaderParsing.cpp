@@ -224,21 +224,14 @@ namespace vcf {
 		{ "phasing", [](const std::string& value, VCFHeader& header) {
 			header.phasing = value;
 		}},
-		{ "recordheader", [](const std::string& value, VCFHeader& header) {
-			string rValue = value;
-			std::vector<string> columns;
-			while (rValue.find('\t') != string::npos) {
-				columns.push_back(rValue.substr(0, rValue.find('\t')));
-				rValue = rValue.substr(rValue.find('\t') + 1);
-			}
-			columns.push_back(rValue);
-			header.recordHeader = columns;
+		{ "recordHeader", [](const std::string& value, VCFHeader& header) {
+			header.recordHeader = splitString(value, '\t');
 		} }
 	};
 
 
 	void parseHeaderLine(const std::string& plainLine, VCFHeader& header) {
-		if (plainLine.substr(2) == "#C") {
+		if (plainLine.starts_with("#CHROM")) {
 			string key = "recordHeader";
 			string line = plainLine.substr(1); // Remove leading '#'
 			header.headerLines.push_back(line);
