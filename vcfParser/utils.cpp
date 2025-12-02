@@ -1,6 +1,8 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <algorithm>
+#include "VCFRecord.h"
 
 namespace vcf
 {
@@ -28,4 +30,36 @@ namespace vcf
 
 		return res;
 	}
+
+
+    EChrom mapChromosome(std::string chrom)
+    {
+        // normalize: uppercase
+        std::transform(chrom.begin(), chrom.end(), chrom.begin(),
+            [](unsigned char c) { return std::toupper(c); });
+
+        // remove leading "CHR"
+        if (chrom.rfind("CHR", 0) == 0)
+            chrom = chrom.substr(3);
+
+        // numeric 1–22
+        if (std::all_of(chrom.begin(), chrom.end(), ::isdigit)) {
+            int num = std::stoi(chrom);
+            if (num >= 1 && num <= 22)
+                return static_cast<EChrom>(num);
+            else
+                return EChrom::NONSTANDARD;
+        }
+
+        // special chromosomes
+        if (chrom == "X")
+            return EChrom::CHRX;
+        if (chrom == "Y")
+            return EChrom::CHRY;
+        if (chrom == "MT" || chrom == "M")
+            return EChrom::CHRM;
+
+        // hs37d5 and 1000 Genomes have many nonstandard contigs
+        return EChrom::NONSTANDARD;
+    }
 }

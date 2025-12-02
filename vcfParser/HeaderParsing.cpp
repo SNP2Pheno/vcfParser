@@ -2,7 +2,6 @@
 #include <functional>
 #include <unordered_map>
 #include "utils.h"
-#include "utils.cpp"
 
 namespace vcf {
 
@@ -225,14 +224,14 @@ namespace vcf {
 		{ "phasing", [](const std::string& value, VCFHeader& header) {
 			header.phasing = value;
 		}},
-		{ "recordheader", [](const std::string& value, VCFHeader& header) {
+		{ "recordHeader", [](const std::string& value, VCFHeader& header) {
 			header.recordHeader = splitString(value, '\t');
 		} }
 	};
 
 
 	void parseHeaderLine(const std::string& plainLine, VCFHeader& header) {
-		if (plainLine.substr(2) == "#C") {
+		if (plainLine.substr(0, 2) == "#C") {
 			string key = "recordHeader";
 			string line = plainLine.substr(1); // Remove leading '#'
 			header.headerLines.push_back(line);

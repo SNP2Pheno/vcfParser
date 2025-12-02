@@ -1,10 +1,7 @@
 ﻿#include "VCFParser.h"
 #include <fstream>
-#include <string>
-#include <iostream>
-#include "utils.h"
 #include "HeaderParsing.h"
-#include "RecordsParser.h"
+#include "RecordsParsing.h"
 
 
 using std::string;
@@ -40,29 +37,45 @@ namespace vcf {
 
 
 		while (inputStream_ && std::getline(*inputStream_, line)) {
-			if (line.substr(0, 2) != "#") {
+			if (line.substr(0, 1) != "#") {
 				// Reached end of header
+				leftoverLine_ = line;
 				break;
 			}
 			parseHeaderLine(line, header);
 		}
-
+		
+		header_ = header;
 		return header;
 
 	}
 
 	vector<VCFRecord> VCFParser::parseAll() {
+		if (records_.size() > 0) {
+			return records_;
+		}
+		if (header_.headerLines.size() == 0) {
+			header_ = parseHeader();
+		}
 		vector<VCFRecord> records;
 		string line;
 
-		while (inputStream_ && std::getline(*inputStream_, line)) {
-			if (line.empty() || line[0] == '#') {
-				continue; // Skip header lines and empty lines
-			}
+		if (!leftoverLine_.empty()) {
 			VCFRecord record;
-			parseRecord(line, record);
+			parseRecord(leftoverLine_, header_.recordHeader, record);
 			records.push_back(record);
 		}
+
+		while (inputStream_ && std::getline(*inputStream_, line)) {
+
+			if (line.empty() || line[0] == '#')
+				continue;
+
+			VCFRecord record;
+			parseRecord(line, header_.recordHeader, record);
+			records.push_back(record);
+		}
+
 
 		return records;
 	}

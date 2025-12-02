@@ -22,5 +22,9 @@ namespace vcf {
 	private:
 		string filePath_;
 		std::istream* inputStream_ = nullptr;
+		string leftoverLine_;
+
+		VCFHeader header_;
+		vector<VCFRecord> records_;
 	};
 }

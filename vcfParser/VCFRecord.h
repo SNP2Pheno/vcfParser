@@ -49,7 +49,7 @@ namespace vcf {
 		string id;												// MANDATORY
 		string ref;												// MANDATORY
 		std::vector<string> alts;								// MANDATORY
-		string qual;											// MANDATORY
+		double qual;											// MANDATORY
 		string filter;											// MANDATORY
 		std::unordered_map<string, std::vector<string>> info;	// MANDATORY
 		std::unordered_set<string> infoFlags;					// MANDATORY
