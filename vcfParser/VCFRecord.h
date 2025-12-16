@@ -65,13 +65,11 @@ namespace vcf {
 				return result;
 			}
 
-			const SampleCall &sample
-			if (idx < samples.size() && !samples[idx].empty()) {
-				sample = samples[idx];
-			}
-			else {
+			if (idx >= samples.size()) {
 				return result;
 			}
+
+			const SampleCall &sample = samples[idx];
 
 			auto it = sample.fields.find("GT");
 			if (it == sample.fields.end() || it->second.empty()) {
